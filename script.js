@@ -1,11 +1,10 @@
-
+let playerScore=0;
+let computerScore=0;
 /*  choice rules:
     0 = Rock
     1 = Paper
     2 = Scissors
-
 */
-
 const choices = new Map([
     ["ROCK", 0],
     ["PAPER", 1],
@@ -26,7 +25,10 @@ function getRandomInt(max) {
 }
 
 function computerChoice(){
-    return getRandomInt(3);
+    // could simply "return getRandomInt(3)" but I used extra viariable for debugging
+    const computerChoice = getRandomInt(3);
+  //  console.log("Computer choice: " + computerChoice)
+    return computerChoice;
 }
 
 function playerChoice(){
@@ -38,31 +40,44 @@ function playerChoice(){
         input = prompt("Something went wrong, please choose Rock, Paper or Scissors by typing the name below:");
         input =input.toUpperCase();
     }
+    //console.log("Player choice: " + choices.get(input));
     return choices.get(input);
 }
 
-let playerScore=0;
-let computerScore=0;
-
 // Result takes two parameters: both are integers representing choices 
-function Result(_playerChoice, _computerChoice){
-    
+function playRound(_playerChoice, _computerChoice){
     if(_playerChoice == _computerChoice){
-        // draw
         console.log("Draw!");
     } else if (resultCheckTable.get(_playerChoice) == _computerChoice){
         playerScore++;
-        // allert - player won
         console.log("Player won!");
     } else if (resultCheckTable.get(_computerChoice) == _playerChoice){
-        //machine won
         computerScore++;
         console.log("Computer won!");
     }
-
     console.log("Player score: " + playerScore + "\nComputer score: " + computerScore);
 }
+// Play 5 rounds
+function game(){
+    for (let i = 0; i <5; i++){
+        playRound(playerChoice(), computerChoice());
+    }
+}
 
-console.log('Hello there, to play use "Start" function');
+game();
 
-Result(playerChoice(), computerChoice());
+/*  My alternative way of playing game as long as player wants
+
+// Asking player if he wants to play again or not
+while (true){
+    let input = prompt("If you want to play again type 'Y', or 'N' to exit");
+    if(input == "y" || input == "Y"){
+        playRound(playerChoice(), computerChoice());
+    }
+    else if(input == "n" || input == "N"){
+        break;
+    }else{
+        input = prompt("Please try again. If you want to play again type 'Y', or 'N' to exit");
+    }
+}
+*/
